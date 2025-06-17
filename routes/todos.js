@@ -16,7 +16,11 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
   const id = parseInt(req.params.id);
   const todo = todos.find(t => t.id === id);
-  res.json(todo); // Bug: If not found, returns undefined
+  if (!todo) {
+  return res.status(404).json({ error: 'Not Found' });
+}
+res.json(todo);
+
 });
 
 // Add new todo (code smell: no validation)
